@@ -4,10 +4,48 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- 基础信息 -->
     <groupId>com.deqiying</groupId>
     <artifactId>file-fingerprint</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
 
+    <!-- 项目介绍 -->
+    <name>file-fingerprint</name>
+    <description>File fingerprint</description>
+    <url>https://github.com/deqiying/file-fingerprint</url>
+
+    <!-- 开源协议 apache 2.0 -->
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <comments>A file fingerprint utils</comments>
+        </license>
+    </licenses>
+
+    <!-- 作者信息 -->
+    <developers>
+        <developer>
+            <name>deqiying</name>
+            <email>deqiying@gmail.com</email>
+            <url>https://github.com/deqiying</url>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <!-- 仓库信息 -->
+    <scm>
+        <tag>main</tag>
+        <connection>scm:git:git://github.com/deqiying/file-fingerprint.git</connection>
+        <developerConnection>scm:git:git@github.com:deqiying/file-fingerprint.git</developerConnection>
+        <url>https://github.com/deqiying/file-fingerprint</url>
+    </scm>
+
+    <!-- 一些属性 -->
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
