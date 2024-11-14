@@ -29,7 +29,7 @@ jobs:
           distribution: 'temurin'
           server-id: 'deqiying'
           server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_USERNAME }}
+          server-password: ${{ secrets.OSSRH_PASSWORD }}
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
           cache: 'maven'
@@ -56,7 +56,7 @@ jobs:
           SIGN_KEY_PASS: ${{ secrets.GPG_PASSPHRASE }}
           server-id: 'deqiying'
           server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_USERNAME }}
+          server-password: ${{ secrets.OSSRH_PASSWORD }}
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
           cache: 'maven'
