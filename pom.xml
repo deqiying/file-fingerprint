@@ -7,7 +7,7 @@
     <!-- 基础信息 -->
     <groupId>com.deqiying</groupId>
     <artifactId>file-fingerprint</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <packaging>jar</packaging>
 
     <!-- 项目介绍 -->
@@ -58,6 +58,7 @@
     <distributionManagement>
         <repository>
             <id>deqiying</id>
+            <name>Maven Central</name>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
     </distributionManagement>
