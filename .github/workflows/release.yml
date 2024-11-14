@@ -28,9 +28,6 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn clean install
-
       - name: Set up GPG
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -40,6 +37,9 @@ jobs:
           echo "default-cache-ttl 600" >> ~/.gnupg/gpg-agent.conf
           echo "max-cache-ttl 7200" >> ~/.gnupg/gpg-agent.conf
           echo RELOADAGENT | gpg-connect-agent
+
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: Publish to Maven Central
         env:
