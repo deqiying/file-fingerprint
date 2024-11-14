@@ -1,5 +1,6 @@
 package com.deqiying.file;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,18 +17,34 @@ import java.security.NoSuchAlgorithmException;
 public class FileFingerprintUtils {
     private static final String HASH_ALGORITHM = "SHA-256";
 
+
     /**
      * 生成文件指纹。
      *
      * @param filePath 文件路径。
      * @return 文件指纹。
-     * @throws IOException              如果发生文件读取错误。
-     * @throws NoSuchAlgorithmException 如果指定的哈希算法不存在。
      */
-    public static String generateFingerprint(Path filePath) throws IOException, NoSuchAlgorithmException {
+    public static String generateFingerprint(Path filePath) {
         // 使用 try-with-resources 自动关闭文件输入流
         try (FileInputStream fis = new FileInputStream(filePath.toFile())) {
             return generateFingerprint(fis);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    /**
+     * 生成文件指纹。
+     *
+     * @param file 文件。
+     * @return 文件指纹。
+     */
+    public static String generateFingerprint(File file) {
+        // 使用 try-with-resources 自动关闭文件输入流
+        try (FileInputStream fis = new FileInputStream(file)) {
+            return generateFingerprint(fis);
+        } catch (Exception ex) {
+            return null;
         }
     }
 
