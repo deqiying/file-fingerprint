@@ -5,17 +5,20 @@
     <servers>
         <server>
             <id>deqiying</id>
-            <username>${secrets.OSSRH_USERNAME}</username>
-            <password>${secrets.OSSRH_PASSWORD}</password>
+            <username>${env.OSSRH_USERNAME}</username>
+            <password>${env.OSSRH_PASSWORD}</password>
         </server>
     </servers>
 
     <profiles>
         <profile>
             <id>release</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <gpg.executable>gpg</gpg.executable>
-                <gpg.passphrase>${secrets.GPG_PASSPHRASE}</gpg.passphrase>
+                <gpg.passphrase>${gpg.passphrase}</gpg.passphrase>
             </properties>
         </profile>
     </profiles>
