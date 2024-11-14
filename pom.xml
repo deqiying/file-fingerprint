@@ -12,14 +12,17 @@
 
     <!-- 项目介绍 -->
     <name>file-fingerprint</name>
-    <description>File fingerprint</description>
+    <description>
+        一个可以帮助你获取文件指纹的工具，这个文件指纹可以认为是唯一的。
+        A tool that can help you obtain a file fingerprint, which can be considered a unique identifier for the file.
+    </description>
     <url>https://github.com/deqiying/file-fingerprint</url>
 
     <!-- 开源协议 apache 2.0 -->
     <licenses>
         <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <name>Apache License 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <comments>A file fingerprint utils</comments>
         </license>
     </licenses>
@@ -57,11 +60,6 @@
             <id>deqiying</id>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
-        <snapshotRepository>
-            <!-- 与settings.xml的server.id保持一致 -->
-            <id>deqiying</id>
-            <url>https://central.sonatype.com/</url>
-        </snapshotRepository>
     </distributionManagement>
 
     <!-- 插件 -->
