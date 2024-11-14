@@ -35,11 +35,10 @@ jobs:
           echo "max-cache-ttl 7200" >> ~/.gnupg/gpg-agent.conf
           echo RELOADAGENT | gpg-connect-agent
 
-      - name: Build with Maven
-        run: mvn clean install -e
 
       - name: Publish to Maven Central
         env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
