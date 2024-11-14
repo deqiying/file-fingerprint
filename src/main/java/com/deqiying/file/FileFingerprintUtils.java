@@ -55,16 +55,35 @@ public class FileFingerprintUtils {
      * @return 文件指纹。
      */
     public static String generateFingerprint(InputStream inputStream) {
-        MessageDigest messageDigest = null;
         try {
             // 初始化 SHA-256 消息摘要
-            messageDigest = MessageDigest.getInstance(HASH_ALGORITHM);
+            MessageDigest messageDigest = MessageDigest.getInstance(HASH_ALGORITHM);
             // 读取文件内容
             byte[] buffer = new byte[8192];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 messageDigest.update(buffer, 0, bytesRead);
             }
+            return bytesToHex(messageDigest.digest());
+        } catch (Throwable ignored) {
+
+        }
+        return null;
+    }
+
+
+    /**
+     * 生成文件指纹。
+     *
+     * @param fileBytes 文件字节数组。
+     * @return 文件指纹。
+     */
+    public static String generateFingerprint(byte[] fileBytes) {
+        try {
+            // 初始化 SHA-256 消息摘要
+            MessageDigest messageDigest = MessageDigest.getInstance(HASH_ALGORITHM);
+            // 读取文件内容
+            messageDigest.update(fileBytes);
             return bytesToHex(messageDigest.digest());
         } catch (Throwable ignored) {
 
