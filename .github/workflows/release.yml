@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main    # 仅当推送到 main 分支时触发
-    tags:
-      - 'v*'    # 仅当 tag 以 "v" 开头时触发，格式如 v1.0.0
 
 jobs:
   release:
@@ -14,6 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set up Node.js 20  # 使用 Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
       - name: Checkout code
         uses: actions/checkout@v3
 
