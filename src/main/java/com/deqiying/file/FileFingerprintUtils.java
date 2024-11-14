@@ -2,11 +2,9 @@ package com.deqiying.file;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * 文件指纹工具类
@@ -14,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
  * @author qiying
  * @since 2024-11-13
  */
+@SuppressWarnings("unused")
 public class FileFingerprintUtils {
     private static final String HASH_ALGORITHM = "SHA-256";
 
