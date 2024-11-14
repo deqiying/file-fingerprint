@@ -6,11 +6,9 @@ on:
       - main    # 仅当推送到 main 分支时触发
     tags:
       - 'v*'    # 只匹配版本号标签，例如 v1.0.0、v2.1.0 等
+      - 'release-*'
 jobs:
   deploy:
-    # 仅在 main 分支和版本号标签时执行
-    if: github.ref == 'refs/heads/main' && startsWith(github.ref, 'refs/tags/v')
-
     runs-on: ubuntu-latest
     environment:
       name: release-env
