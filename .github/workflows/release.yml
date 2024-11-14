@@ -46,6 +46,8 @@ jobs:
           echo "max-cache-ttl 7200" >> ~/.gnupg/gpg-agent.conf
           echo RELOADAGENT | gpg-connect-agent
 
+      - name: Copy settings.xml to .m2
+        run: cp ./settings.xml ~/.m2/settings.xml
 
       - name: Publish to Maven Central
         env:
