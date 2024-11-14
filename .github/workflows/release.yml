@@ -10,6 +10,7 @@ jobs:
     if: github.ref_name == 'main' # 确保同时是main分支和版本号tag
 
     runs-on: ubuntu-latest
+    environment: release-env
 
     steps:
       - name: Set up Node.js 20  # 使用 Node.js 20
