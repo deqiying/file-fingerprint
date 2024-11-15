@@ -24,9 +24,20 @@ public class FileFingerprintUtils {
      * @return 文件指纹。
      */
     public static String generateFingerprint(Path filePath) {
+        return generateFingerprint(filePath, null);
+    }
+
+    /**
+     * 生成文件指纹。
+     *
+     * @param filePath 文件路径。
+     * @param offset   偏移量。
+     * @return 文件指纹。
+     */
+    public static String generateFingerprint(Path filePath, String offset) {
         // 使用 try-with-resources 自动关闭文件输入流
         try (FileInputStream fis = new FileInputStream(filePath.toFile())) {
-            return generateFingerprint(fis);
+            return generateFingerprint(fis, offset);
         } catch (Exception ex) {
             return null;
         }
@@ -39,9 +50,20 @@ public class FileFingerprintUtils {
      * @return 文件指纹。
      */
     public static String generateFingerprint(File file) {
+        return generateFingerprint(file, null);
+    }
+
+    /**
+     * 生成文件指纹。
+     *
+     * @param file   文件。
+     * @param offset 偏移量。
+     * @return 文件指纹。
+     */
+    public static String generateFingerprint(File file, String offset) {
         // 使用 try-with-resources 自动关闭文件输入流
         try (FileInputStream fis = new FileInputStream(file)) {
-            return generateFingerprint(fis);
+            return generateFingerprint(fis, offset);
         } catch (Exception ex) {
             return null;
         }
@@ -54,22 +76,38 @@ public class FileFingerprintUtils {
      * @return 文件指纹。
      */
     public static String generateFingerprint(InputStream inputStream) {
+        return generateFingerprint(inputStream, null);
+    }
+
+    /**
+     * 生成文件指纹。
+     *
+     * @param inputStream 文件输入流。
+     * @param offset      偏移量。
+     * @return 文件指纹。
+     */
+    public static String generateFingerprint(InputStream inputStream, String offset) {
+
         try {
-            // 初始化 SHA-256 消息摘要
             MessageDigest messageDigest = MessageDigest.getInstance(HASH_ALGORITHM);
-            // 读取文件内容
+
+            // 将偏移量的字符串值加入哈希计算
+            if (offset != null) {
+                messageDigest.update(offset.getBytes());
+            }
+
+            // 读取文件内容并继续更新哈希
             byte[] buffer = new byte[8192];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 messageDigest.update(buffer, 0, bytesRead);
             }
+
             return bytesToHex(messageDigest.digest());
         } catch (Throwable ignored) {
-
         }
         return null;
     }
-
 
     /**
      * 生成文件指纹。
