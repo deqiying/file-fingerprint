@@ -129,6 +129,29 @@ public class FileFingerprintUtils {
     }
 
     /**
+     * 生成文件指纹。
+     *
+     * @param fileBytes 文件字节数组。
+     * @return 文件指纹。
+     */
+    public static String generateFingerprint(byte[] fileBytes, String offset) {
+        if (offset == null) {
+            return generateFingerprint(fileBytes);
+        }
+        try {
+            // 初始化 SHA-256 消息摘要
+            MessageDigest messageDigest = MessageDigest.getInstance(HASH_ALGORITHM);
+            // 读取文件内容
+            messageDigest.update(offset.getBytes());
+            messageDigest.update(fileBytes);
+            return bytesToHex(messageDigest.digest());
+        } catch (Throwable ignored) {
+
+        }
+        return null;
+    }
+
+    /**
      * 将字节数组转换为十六进制字符串。
      *
      * @param bytes 字节数组。
