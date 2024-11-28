@@ -7,7 +7,7 @@
     <!-- 基础信息 -->
     <groupId>com.deqiying</groupId>
     <artifactId>file-fingerprint</artifactId>
-    <version>0.0.7</version>
+    <version>0.0.8</version>
     <packaging>jar</packaging>
 
     <!-- 项目介绍 -->
