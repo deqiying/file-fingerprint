@@ -1,5 +1,6 @@
 package com.deqiying.file;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -29,79 +30,55 @@ public class UrlUtils {
      * @throws Exception 如果URL无效或请求失败
      */
     public static InputStream openUrl(String url) throws Exception {
-        if (!isValidUrl(url)) {
-            throw new MalformedURLException("无效的URL: " + url);
-        }
-
-        URL urlObj = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setConnectTimeout(5000); // 设置连接超时时间
-        connection.setReadTimeout(5000);    // 设置读取超时时间
+        // 打开连接
+        HttpURLConnection connection = openUrlConnection(url);
 
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            // 获取响应的 Content-Type
-            String contentType = connection.getContentType();
-            if (isDownloadable(contentType)) {
-                return connection.getInputStream();
-            } else {
-                System.out.println("URL 响应类型不是文件或流: " + contentType);
-                return null;
-            }
+            return connection.getInputStream();
         } else {
-            throw new Exception("无法打开URL，响应码: " + responseCode);
+            throw new Exception("无法打开URL,响应码: " + responseCode);
         }
     }
 
     /**
-     * 判断URL是否返回可下载的内容
+     * 尝试下载一个URL链接
      *
-     * @param url 要判断的URL
-     * @return 如果支持下载返回true，否则返回false
-     * @throws Exception 如果请求失败
+     * @param url 要打开的URL
+     * @return byte[] 下载好的字节流
+     * @throws Exception 如果URL无效或请求失败
      */
-    public static boolean isDownloadable(String url) throws Exception {
+    public static byte[] downloadUrl(String url) throws Exception {
+        try (InputStream inputStream = openUrl(url);
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            // 缓冲区
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            return outputStream.toByteArray();
+        }
+    }
+
+    /**
+     * 尝试打开一个URL链接，返回HttpURLConnection对象
+     *
+     * @param url 要打开的URL
+     * @return HttpURLConnection 如果是文件或流；否则返回null
+     * @throws Exception 如果URL无效或请求失败
+     */
+    public static HttpURLConnection openUrlConnection(String url) throws Exception {
+        if (!isValidUrl(url)) {
+            throw new MalformedURLException("无效的URL: " + url);
+        }
         URL urlObj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
-        connection.setRequestMethod("HEAD"); // 使用HEAD请求避免下载整个内容
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(5000);
-
-        int responseCode = connection.getResponseCode();
-        if (responseCode != HttpURLConnection.HTTP_OK) {
-            return false; // 如果响应不是200 OK，则不支持下载
-        }
-
-        // 检查 Content-Disposition 是否包含附件
-        String contentDisposition = connection.getHeaderField("Content-Disposition");
-        if (contentDisposition != null && contentDisposition.toLowerCase().contains("attachment")) {
-            return true;
-        }
-
-        // 检查 Content-Type 是否为支持下载的类型
-        String contentType = connection.getContentType();
-        return isDownloadableContentType(contentType);
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(10 * 60 * 1000); // 设置连接超时时间
+        // 设置读取超时时间--不限时间
+        connection.setReadTimeout(0);
+        return connection;
     }
-
-    /**
-     * 判断Content-Type是否支持下载
-     *
-     * @param contentType 响应的Content-Type
-     * @return 如果支持下载返回true，否则返回false
-     */
-    private static boolean isDownloadableContentType(String contentType) {
-        if (contentType == null) {
-            return false;
-        }
-        // 常见文件和流类型
-        return contentType.startsWith("application/") || // 二进制文件（如PDF、ZIP、EXE）
-                contentType.startsWith("image/") ||       // 图片文件
-                contentType.startsWith("video/") ||       // 视频文件
-                contentType.startsWith("audio/") ||       // 音频文件
-                contentType.startsWith("text/csv") ||     // CSV 文件
-                contentType.equals("application/octet-stream"); // 通用二进制流
-    }
-
 
 }
